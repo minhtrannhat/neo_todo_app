@@ -1,0 +1,63 @@
+[project]
+name = "Todo_api"
+version = ""
+description = ""
+authors = [
+    {name = "Minh Tran Nhat", email = "minhtrannhat@minhtrannhat.com"},
+]
+requires-python = ">=3.10"
+license = {text = "Private"}
+dependencies = [
+    "quart>=0.18.3",
+]
+[project.optional-dependencies]
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+[tool]
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=22.6.0",
+    "isort>=5.10.1",
+    "mypy>=0.971",
+    "flake8>=4.0.1",
+    "bandit>=1.7.4",
+    "vulture>=2.5",
+    "pytest>=7.1.2",
+    "pytest-asyncio>=0.19.0",
+    "djhtml>=1.5.2",
+]
+
+[tool.black]
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+
+[tool.vulture]
+min_confidence = 100
+
+[tool.pytest.ini_options]
+addopts = "--showlocals"
+asyncio_mode = "auto"
+pythonpath = ["src"]
+
+[tool.pdm.scripts]
+format-black = "black src/ tests/"
+format-djhtml = "djhtml src/backend/templates -t 2 --in-place"
+format-isort = "isort src tests"
+format = {composite = ["format-black", "format-djhtml", "format-isort"]}
+
+lint-bandit = "bandit -r src/"
+lint-black = "black --check --diff src/ tests/"
+lint-djhtml = "djhtml src/backend/templates -t 2 --check"
+lint-flake8 = "flake8 src/ tests/"
+lint-isort = "isort --check --diff src tests"
+lint-mypy = "mypy src/backend tests"
+lint-vulture = "vulture src"
+lint = {composite = ["lint-bandit", "lint-black", "lint-djhtml", "lint-flake8", "lint-isort", "lint-mypy", "lint-vulture"]}
+
+start = {cmd = "quart --app src/backend/run.py run --port 5050", env_file = "development.env"}
+test = {cmd = "pytest tests/", env_file = "testing.env"}
