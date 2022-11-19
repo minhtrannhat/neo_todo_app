@@ -1,16 +1,41 @@
 from quart import Quart, ResponseReturnValue
+
+# Each blueprint is a logical collection of features in our web app
 from backend.blueprints.control import blueprint as control_blueprint
 
+# For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
 
+# Rate limiting
+from quart_rate_limiter import RateLimiter
+from quart_rate_limiter import RateLimitExceeded
+from datetime import timedelta
 
-app = Quart(__name__)
+# Authentication
+from quart_auth import AuthManager
+
+
+app: Quart = Quart(__name__)
+auth_manager: AuthManager = AuthManager(app)
+rate_limiter: RateLimiter = RateLimiter(app)
+
+# Configure the web app
+# Either in DEV/DEBUG mode or TEST mode
 app.config.from_prefixed_env(prefix="TODO")
 
 
 app.register_blueprint(control_blueprint)
 
 
+# rate limiting
+@app.errorhandler(RateLimitExceeded)  # type: ignore
+async def handle_rate_limit_exceeded_error(
+    error: RateLimitExceeded,
+) -> ResponseReturnValue:
+    return {}, error.get_headers(), 429
+
+
+# handles errors
 @app.errorhandler(APIError)  # type: ignore
 async def handle_api_error(error: APIError) -> ResponseReturnValue:
     return {"code": error.code}, error.status_code
