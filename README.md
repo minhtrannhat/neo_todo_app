@@ -8,7 +8,11 @@
 
 ## Backend
 
-### Development dependencies
+### Development workflow
+
+- Run `eval (pdm venv activate in-project)` (if you are using Fish shell) or `eval $(pdm venv activate in-project)` (if you are using bash/zsh) at the `backend` folder root.
+
+### Dependencies
 
 #### Python dependencies
 
@@ -22,7 +26,8 @@
 - `bcrypt`: Hashing and salting password.
 - `zxcvbn`: Test password strength.
 - `freezegun`: Check for expired token.
-- `quart-rate-limiter`: rate limiting
+- `quart-rate-limiter`: Rate limiting
+- `pydantic` and `quart-schema`: Request/Response validation
 
 #### SQL Dev-deps
 

@@ -5,7 +5,7 @@ from quart_rate_limiter import (
 
 from backend.run import app
 
-IGNORED_ENDPOINTS = {"static"}
+IGNORED_ENDPOINTS = {"static", "openapi", "redoc_ui", "swagger_ui"}
 
 
 # Check if all api routes are rate limited
