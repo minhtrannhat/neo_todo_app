@@ -1,5 +1,9 @@
 from quart import Quart, ResponseReturnValue
 
+import os
+from subprocess import call  # no sec
+from urllib.parse import urlparse
+
 # Each blueprint is a logical collection of features in our web app
 from backend.blueprints.control import blueprint as control_blueprint
 
@@ -9,7 +13,6 @@ from backend.lib.api_error import APIError
 # Rate limiting
 from quart_rate_limiter import RateLimiter
 from quart_rate_limiter import RateLimitExceeded
-from datetime import timedelta
 
 # Authentication
 from quart_auth import AuthManager
@@ -17,15 +20,21 @@ from quart_auth import AuthManager
 # Request/Response validation
 from quart_schema import QuartSchema, RequestSchemaValidationError
 
+# PostgreSQL database driver
+from quart_db import QuartDB
+
 
 app: Quart = Quart(__name__)
-auth_manager: AuthManager = AuthManager(app)
-rate_limiter: RateLimiter = RateLimiter(app)
-schema = QuartSchema(app, convert_casing=True)
 
 # Configure the web app
 # Either in DEV/DEBUG mode or TEST mode
 app.config.from_prefixed_env(prefix="TODO")
+
+auth_manager: AuthManager = AuthManager(app)
+quart_db = QuartDB(app)
+rate_limiter: RateLimiter = RateLimiter(app)
+schema = QuartSchema(app, convert_casing=True)
+
 
 app.register_blueprint(control_blueprint)
 
@@ -58,3 +67,38 @@ async def handle_request_validation_error(
         return {"errors": str(error.validation_error)}, 400
     else:
         return {"errors": error.validation_error.json()}, 400
+
+
+@app.cli.command("recreate_db")
+def recreate_db() -> None:
+    db_url = urlparse(os.environ["TODO_QUART_DB_DATABASE_URL"])
+    call(  # nosec
+        [
+            "psql",
+            "-U",
+            "postgres",
+            "-c",
+            f"DROP DATABASE IF EXISTS {db_url.path.removeprefix('/')}",
+        ],
+    )
+    call(  # nosec
+        ["psql", "-U", "postgres", "-c", f"DROP USER IF EXISTS {db_url.username}"],
+    )
+    call(  # nosec
+        [
+            "psql",
+            "-U",
+            "postgres",
+            "-c",
+            f"CREATE USER {db_url.username} LOGIN PASSWORD '{db_url.password}' CREATEDB",  # noqa: E501
+        ],
+    )
+    call(  # nosec
+        [
+            "psql",
+            "-U",
+            "postgres",
+            "-c",
+            f"CREATE DATABASE {db_url.path.removeprefix('/')}",
+        ],
+    )

@@ -51,7 +51,7 @@ jobs:
         working-directory: backend
 
     env:
-      TOZO_QUART_DB_DATABASE_URL: "postgresql://todo:todo@postgres:5432/todo_test"
+      TODO_QUART_DB_DATABASE_URL: "postgresql://todo:todo@postgres:5432/todo_test"
 
     steps:
       - uses: actions/checkout@v3

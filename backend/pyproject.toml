@@ -15,6 +15,7 @@ dependencies = [
     "quart-rate-limiter>=0.7.0",
     "pydantic[email]>=1.10.2",
     "quart-schema>=0.14.3",
+    "quart-db[postgresql]>=0.4.1",
 ]
 [project.optional-dependencies]
 
@@ -67,4 +68,7 @@ lint-vulture = "vulture src"
 lint = {composite = ["lint-bandit", "lint-black", "lint-djhtml", "lint-flake8", "lint-isort", "lint-mypy", "lint-vulture"]}
 
 start = {cmd = "quart --app src/backend/run.py run --port 5050", env_file = "development.env"}
-test = {cmd = "pytest tests/", env_file = "testing.env"}
+
+recreate-db-base = "quart --app src/backend/run.py recreate_db"
+recreate-db = {composite = ["recreate-db-base"], env_file = "development.env"}
+test = {composite = ["recreate-db-base", "pytest tests/"], env_file = "testing.env"}
