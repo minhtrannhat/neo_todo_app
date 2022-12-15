@@ -16,6 +16,7 @@ dependencies = [
     "pydantic[email]>=1.10.2",
     "quart-schema>=0.14.3",
     "quart-db[postgresql]>=0.4.1",
+    "httpx>=0.23.1",
 ]
 [project.optional-dependencies]
 
