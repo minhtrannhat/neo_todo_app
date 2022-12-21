@@ -23,6 +23,9 @@ from quart_schema import QuartSchema, RequestSchemaValidationError
 # PostgreSQL database driver
 from quart_db import QuartDB
 
+# logging
+import logging
+
 
 app: Quart = Quart(__name__)
 
@@ -34,7 +37,7 @@ auth_manager: AuthManager = AuthManager(app)
 quart_db = QuartDB(app)
 rate_limiter: RateLimiter = RateLimiter(app)
 schema = QuartSchema(app, convert_casing=True)
-
+logging.basicConfig(level=logging.INFO)
 
 app.register_blueprint(control_blueprint)
 

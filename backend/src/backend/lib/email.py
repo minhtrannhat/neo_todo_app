@@ -27,7 +27,7 @@ async def send_email(
             response = await client.post(
                 "https://api.postmarkapp.com/email",
                 json={
-                    "From": "Tozo <help@tozo.dev>",
+                    "From": "Todo <todo@minhtrannhat.com>",
                     "To": to,
                     "Subject": subject,
                     "Tag": template,
