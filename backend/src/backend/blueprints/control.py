@@ -1,7 +1,6 @@
 from quart import Blueprint, ResponseReturnValue
 from quart_rate_limiter import rate_exempt
 
-
 blueprint = Blueprint("control", __name__)
 
 
