@@ -41,7 +41,7 @@ async def insert_member(db: Connection, email: str, password_hash: str) -> Membe
                        email_verified""",
         {"email": email, "password_hash": password_hash},
     )
-    return Member(**result)
+    return Member(**result)  # type: ignore
 
 
 async def update_member_password(db: Connection, id: int, password_hash: str) -> None:

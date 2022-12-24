@@ -1,31 +1,28 @@
-from quart import Quart, ResponseReturnValue
-
+# logging
+import logging
 import os
 from subprocess import call  # nosec
 from urllib.parse import urlparse
+
+from quart import Quart, ResponseReturnValue
+
+# Authentication
+from quart_auth import AuthManager
+
+# PostgreSQL database driver
+from quart_db import QuartDB
+
+# Rate limiting
+from quart_rate_limiter import RateLimiter, RateLimitExceeded
+
+# Request/Response validation
+from quart_schema import QuartSchema, RequestSchemaValidationError
 
 # Each blueprint is a logical collection of features in our web app
 from backend.blueprints.control import blueprint as control_blueprint
 
 # For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
-
-# Rate limiting
-from quart_rate_limiter import RateLimiter
-from quart_rate_limiter import RateLimitExceeded
-
-# Authentication
-from quart_auth import AuthManager
-
-# Request/Response validation
-from quart_schema import QuartSchema, RequestSchemaValidationError
-
-# PostgreSQL database driver
-from quart_db import QuartDB
-
-# logging
-import logging
-
 
 app: Quart = Quart(__name__)
 
