@@ -37,3 +37,10 @@
 #### Miscs Dev-deps
 
 - `djhtml`: Generate jinja templates html for emails.
+
+### Backend Technical Write-up
+
+#### Difference between database schema and database model
+
+- A schema defines the structure of data within the database.
+- A model is a class that can be represented as rows in the database, i.e ID row, age row as class member.

@@ -1,7 +1,7 @@
 from quart import Quart, ResponseReturnValue
 
 import os
-from subprocess import call  # no sec
+from subprocess import call  # nosec
 from urllib.parse import urlparse
 
 # Each blueprint is a logical collection of features in our web app
