@@ -20,6 +20,7 @@ from quart_schema import QuartSchema, RequestSchemaValidationError
 
 # Each blueprint is a logical collection of features in our web app
 from backend.blueprints.control import blueprint as control_blueprint
+from backend.blueprints.sessions import blueprint as sessions_blueprint
 
 # For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
@@ -36,7 +37,9 @@ rate_limiter: RateLimiter = RateLimiter(app)
 schema = QuartSchema(app, convert_casing=True)
 logging.basicConfig(level=logging.INFO)
 
+# registers these groups of routes handlers
 app.register_blueprint(control_blueprint)
+app.register_blueprint(sessions_blueprint)
 
 
 # rate limiting
