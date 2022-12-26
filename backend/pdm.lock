@@ -554,9 +554,14 @@ dependencies = [
     "h11<1,>=0.9.0",
 ]
 
+[[package]]
+name = "zxcvbn"
+version = "4.4.28"
+summary = ""
+
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:13ab53060a70e6594c56adc5109a6476e7c085b65be0550d113c28338ef1b985"
+content_hash = "sha256:6d55ad044722dfe8cdb3f4b69623fec92653fe73f9ee7ae12717c06912aa3f1e"
 
 [metadata.files]
 "aiofiles 22.1.0" = [
@@ -1026,4 +1031,7 @@ content_hash = "sha256:13ab53060a70e6594c56adc5109a6476e7c085b65be0550d113c28338
 "wsproto 1.2.0" = [
     {url = "https://files.pythonhosted.org/packages/78/58/e860788190eba3bcce367f74d29c4675466ce8dddfba85f7827588416f01/wsproto-1.2.0-py3-none-any.whl", hash = "sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736"},
     {url = "https://files.pythonhosted.org/packages/c9/4a/44d3c295350d776427904d73c189e10aeae66d7f555bb2feee16d1e4ba5a/wsproto-1.2.0.tar.gz", hash = "sha256:ad565f26ecb92588a3e43bc3d96164de84cd9902482b130d0ddbaa9664a85065"},
+]
+"zxcvbn 4.4.28" = [
+    {url = "https://files.pythonhosted.org/packages/54/67/c6712608c99e7720598e769b8fb09ebd202119785adad0bbce25d330243c/zxcvbn-4.4.28.tar.gz", hash = "sha256:151bd816817e645e9064c354b13544f85137ea3320ca3be1fb6873ea75ef7dc1"},
 ]

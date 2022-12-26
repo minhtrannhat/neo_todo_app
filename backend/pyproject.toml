@@ -17,6 +17,7 @@ dependencies = [
     "quart-schema>=0.14.3",
     "quart-db[postgresql]>=0.4.1",
     "httpx>=0.23.1",
+    "zxcvbn>=4.4.28",
 ]
 [project.optional-dependencies]
 
@@ -78,4 +79,4 @@ recreate-db-base = "quart --app src/backend/run.py recreate_db"
 recreate-db = {composite = ["recreate-db-base"], env_file = "development.env"}
 test = {composite = ["recreate-db-base", "pytest tests/"], env_file = "testing.env"}
 
-all = {composite = ["lint", "format", "test"]}
+all = {composite = ["format", "lint", "test"]}
