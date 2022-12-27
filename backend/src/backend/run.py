@@ -22,6 +22,7 @@ from quart_schema import QuartSchema, RequestSchemaValidationError
 from backend.blueprints.control import blueprint as control_blueprint
 from backend.blueprints.members import blueprint as members_blueprint
 from backend.blueprints.sessions import blueprint as sessions_blueprint
+from backend.blueprints.todos import blueprint as todos_blueprint
 
 # For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
@@ -42,6 +43,7 @@ logging.basicConfig(level=logging.INFO)
 app.register_blueprint(control_blueprint)
 app.register_blueprint(sessions_blueprint)
 app.register_blueprint(members_blueprint)
+app.register_blueprint(todos_blueprint)
 
 
 # rate limiting
