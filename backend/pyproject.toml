@@ -8,19 +8,17 @@ authors = [
 requires-python = ">=3.10"
 license = {text = "Private"}
 dependencies = [
-    "quart>=0.18.3",
+    "quart>=0.18.4",
     "quart-auth>=0.7.0",
     "bcrypt>=4.0.1",
     "itsdangerous>=2.1.2",
     "quart-rate-limiter>=0.7.0",
-    "pydantic[email]>=1.10.2",
+    "pydantic[email]==1.10.11",
     "quart-schema>=0.14.3",
     "quart-db[postgresql]>=0.4.1",
     "httpx>=0.23.1",
     "zxcvbn>=4.4.28",
 ]
-[project.optional-dependencies]
-
 [build-system]
 requires = ["pdm-pep517>=1.0.0"]
 build-backend = "pdm.pep517.api"
