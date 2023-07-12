@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from quart import Quart, ResponseReturnValue
 
 # Authentication
-from quart_auth import AuthManager
+from quart_auth import QuartAuth
 
 # PostgreSQL database driver
 from quart_db import QuartDB
@@ -33,7 +33,7 @@ app: Quart = Quart(__name__)
 # Either in DEV/DEBUG mode or TEST mode
 app.config.from_prefixed_env(prefix="TODO")
 
-auth_manager: AuthManager = AuthManager(app)
+auth_manager: QuartAuth = QuartAuth(app)
 quart_db = QuartDB(app)
 rate_limiter: RateLimiter = RateLimiter(app)
 schema = QuartSchema(app, convert_casing=True)
@@ -108,4 +108,13 @@ def recreate_db() -> None:
             "-c",
             f"CREATE DATABASE {db_url.path.removeprefix('/')}",
         ],
+    )
+    call(
+        [
+            "psql",
+            "-U",
+            "postgres",
+            "-c",
+            f"ALTER DATABASE {db_url.path.removeprefix('/')} OWNER TO {db_url.username}",
+        ]
     )

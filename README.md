@@ -10,6 +10,7 @@
 
 ### Development workflow
 
+- Depends on the state of the database, run `pdm run recreate-db` to regenerate database.
 - Run `eval (pdm venv activate in-project)` (if you are using Fish shell) or `eval $(pdm venv activate in-project)` (if you are using bash/zsh) at the `backend` folder root to get into the backend python virtual environment.
 - Run tests, lints, formats with `pdm run {test, lint, format}`.
 
