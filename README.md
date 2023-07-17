@@ -8,7 +8,7 @@
 
 ### Frontend Technical Write-up
 
-Inside the `backend\` folder
+Inside the `frontend/` folder
 
 ## Backend
 
@@ -46,4 +46,4 @@ Inside the `backend\` folder
 
 ### Backend Technical Write-up
 
-Inside the `backend\` folder
+Inside the `backend/` folder
