@@ -109,6 +109,7 @@ def recreate_db() -> None:
             f"CREATE DATABASE {db_url.path.removeprefix('/')}",
         ],
     )
+
     call(  # nosec
         [
             "psql",
