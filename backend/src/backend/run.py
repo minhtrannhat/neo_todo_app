@@ -115,6 +115,7 @@ def recreate_db() -> None:
             "-U",
             "postgres",
             "-c",
-            f"ALTER DATABASE {db_url.path.removeprefix('/')} OWNER TO {db_url.username}",
+            f"ALTER DATABASE \
+                    {db_url.path.removeprefix('/')} OWNER TO {db_url.username}",
         ]
     )
