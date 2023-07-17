@@ -29,7 +29,7 @@ async def select_todos(
                     WHERE member_id = :member_id
                           AND complete = :complete"""
         values = {"member_id": member_id, "complete": complete}
-    return [Todo(**row) async for row in await connection.iterate(query, values)]
+    return [Todo(**row) async for row in connection.iterate(query, values)]
 
 
 async def select_todo(

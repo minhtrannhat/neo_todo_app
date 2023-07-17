@@ -109,12 +109,14 @@ def recreate_db() -> None:
             f"CREATE DATABASE {db_url.path.removeprefix('/')}",
         ],
     )
-    call(
+
+    call(  # nosec
         [
             "psql",
             "-U",
             "postgres",
             "-c",
-            f"ALTER DATABASE {db_url.path.removeprefix('/')} OWNER TO {db_url.username}",
+            f"ALTER DATABASE \
+                    {db_url.path.removeprefix('/')} OWNER TO {db_url.username}",
         ]
     )
