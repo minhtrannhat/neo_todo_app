@@ -2,6 +2,18 @@
 
 ## General Bits of Information
 
+### SameSite setting
+
+The SameSite setting ensures that cookie data is only sent with requests that originate from the given domain. This prevents other websites from initiating requests with the cookie data.
+
+### Pydantic's purpose
+
+Pydantic is to validate the schema/the shape of our input/output (works with JSON responses too).
+
+### Python's dataclass
+
+Class full of data. Meant to be used to serialize data into JSON objects.
+
 ### Quart specific terminologies
 
 `blueprint`: a collection of route handlers/API functionalities.
