@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from quart import Quart, ResponseReturnValue
 
 # Authentication
-from quart_auth import AuthManager
+from quart_auth import QuartAuth
 
 # PostgreSQL database driver
 from quart_db import QuartDB
@@ -22,6 +22,7 @@ from quart_schema import QuartSchema, RequestSchemaValidationError
 from backend.blueprints.control import blueprint as control_blueprint
 from backend.blueprints.members import blueprint as members_blueprint
 from backend.blueprints.sessions import blueprint as sessions_blueprint
+from backend.blueprints.todos import blueprint as todos_blueprint
 
 # For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
@@ -32,19 +33,24 @@ app: Quart = Quart(__name__)
 # Either in DEV/DEBUG mode or TEST mode
 app.config.from_prefixed_env(prefix="TODO")
 
-auth_manager: AuthManager = AuthManager(app)
+# Initializes auth, database, rate limiter and schema
+# for the web app
+auth_manager: QuartAuth = QuartAuth(app)
 quart_db = QuartDB(app)
 rate_limiter: RateLimiter = RateLimiter(app)
 schema = QuartSchema(app, convert_casing=True)
+
+# Set up logging
 logging.basicConfig(level=logging.INFO)
 
-# registers these groups of routes handlers
+# Registers these groups of routes handlers
 app.register_blueprint(control_blueprint)
 app.register_blueprint(sessions_blueprint)
 app.register_blueprint(members_blueprint)
+app.register_blueprint(todos_blueprint)
 
 
-# rate limiting
+# Rate limiting
 @app.errorhandler(RateLimitExceeded)  # type: ignore
 async def handle_rate_limit_exceeded_error(
     error: RateLimitExceeded,
@@ -52,7 +58,7 @@ async def handle_rate_limit_exceeded_error(
     return {}, error.get_headers(), 429
 
 
-# handles errors
+# Handles errors
 @app.errorhandler(APIError)  # type: ignore
 async def handle_api_error(error: APIError) -> ResponseReturnValue:
     return {"code": error.code}, error.status_code
@@ -106,4 +112,15 @@ def recreate_db() -> None:
             "-c",
             f"CREATE DATABASE {db_url.path.removeprefix('/')}",
         ],
+    )
+
+    call(  # nosec
+        [
+            "psql",
+            "-U",
+            "postgres",
+            "-c",
+            f"ALTER DATABASE \
+                    {db_url.path.removeprefix('/')} OWNER TO {db_url.username}",
+        ]
     )
