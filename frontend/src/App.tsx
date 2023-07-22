@@ -13,11 +13,24 @@ import ThemeProvider from "./ThemeProvider";
 // Material UI stuffs
 import Container from "@mui/material/Container";
 
+// React helmet async: configure the page's title
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
+// Authentication Context: Check if user is logged in or not
+import { AuthContextProvider } from "./AuthContext";
+
 function App() {
   return (
-    <ThemeProvider>
-      <Container maxWidth="md"></Container>
-    </ThemeProvider>
+    <AuthContextProvider>
+      <HelmetProvider>
+        <Helmet>
+          <title>Todo</title>
+        </Helmet>
+        <ThemeProvider>
+          <Container maxWidth="md"></Container>
+        </ThemeProvider>
+      </HelmetProvider>
+    </AuthContextProvider>
   );
 }
 
