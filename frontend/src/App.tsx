@@ -19,6 +19,9 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 // Authentication Context: Check if user is logged in or not
 import { AuthContextProvider } from "./AuthContext";
 
+// React router
+import Router from "./Router";
+
 function App() {
   return (
     <AuthContextProvider>
@@ -27,7 +30,9 @@ function App() {
           <title>Todo</title>
         </Helmet>
         <ThemeProvider>
-          <Container maxWidth="md"></Container>
+          <Container maxWidth="md">
+            <Router />
+          </Container>
         </ThemeProvider>
       </HelmetProvider>
     </AuthContextProvider>
