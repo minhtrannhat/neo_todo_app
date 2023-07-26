@@ -7,4 +7,7 @@ blueprint = Blueprint("control", __name__)
 @blueprint.get("/control/ping/")
 @rate_exempt
 async def ping() -> ResponseReturnValue:
+    """Ping the server
+    Check if server is up and running.
+    """
     return {"ping": "pong"}
