@@ -1,40 +1,40 @@
 import axios from "axios";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useContext } from "react";
-import { useNavigate } from "react-router";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import * as yup from "yup";
 
-import EmailField from "src/components/EmailField";
-import FormActions from "src/components/FormActions";
-import LazyPasswordWithStrengthField from "src/components/LazyPasswordWithStrengthField";
-import Title from "src/components/Title";
-import { ToastContext } from "src/ToastContext";
-import { useMutation } from "src/query";
+import { AuthContext } from "../AuthContext";
+import EmailField from "../components/EmailField";
+import FormActions from "../components/FormActions";
+import PasswordField from "../components/PasswordField";
+import Title from "../components/Title";
+import { ToastContext } from "../ToastContext";
+import { useMutation } from "../query";
 
 interface IForm {
   email: string;
   password: string;
 }
 
-const useRegister = () => {
+const useLogin = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { addToast } = useContext(ToastContext);
-  const { mutateAsync: register } = useMutation(
-    async (data: IForm) => await axios.post("/members/", data),
+  const { setAuthenticated } = useContext(AuthContext);
+  const { mutateAsync: login } = useMutation(
+    async (data: IForm) => await axios.post("/sessions/", data),
   );
 
   return async (data: IForm, { setFieldError }: FormikHelpers<IForm>) => {
     try {
-      await register(data);
-      addToast("Registered", "success");
-      navigate("/login/", { state: { email: data.email } });
+      await login(data);
+      setAuthenticated(true);
+      navigate((location.state as any)?.from ?? "/");
     } catch (error: any) {
-      if (
-        error.response?.status === 400 &&
-        error.response?.data.code === "WEAK_PASSWORD"
-      ) {
-        setFieldError("password", "Password is too weak");
+      if (error.response?.status === 401) {
+        setFieldError("email", "Invalid credentials");
+        setFieldError("password", "Invalid credentials");
       } else {
         addToast("Try again", "error");
       }
@@ -47,13 +47,13 @@ const validationSchema = yup.object({
   password: yup.string().required("Required"),
 });
 
-const Register = () => {
+const Login = () => {
+  const onSubmit = useLogin();
   const location = useLocation();
-  const onSubmit = useRegister();
 
   return (
     <>
-      <Title title="Register" />
+      <Title title="Login" />
       <Formik<IForm>
         initialValues={{
           email: (location.state as any)?.email ?? "",
@@ -65,8 +65,8 @@ const Register = () => {
         {({ dirty, isSubmitting, values }) => (
           <Form>
             <EmailField fullWidth label="Email" name="email" required />
-            <LazyPasswordWithStrengthField
-              autoComplete="new-password"
+            <PasswordField
+              autoComplete="password"
               fullWidth
               label="Password"
               name="password"
@@ -75,16 +75,16 @@ const Register = () => {
             <FormActions
               disabled={!dirty}
               isSubmitting={isSubmitting}
-              label="Register"
+              label="Login"
               links={[
-                {
-                  label: "Login",
-                  to: "/login/",
-                  state: { email: values.email },
-                },
                 {
                   label: "Reset password",
                   to: "/forgotten-password/",
+                  state: { email: values.email },
+                },
+                {
+                  label: "Register",
+                  to: "/register/",
                   state: { email: values.email },
                 },
               ]}
@@ -96,4 +96,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
