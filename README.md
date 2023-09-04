@@ -9,9 +9,12 @@
 ### Dependencies
 
 - React
-- React helment async: manage changes to document head.
-- Material UI
+- React helment async: manage changes to document head
+- React router dom: route management
+- Material UI: UI styled components
 - Roboto font
+- Formik: form management
+- Yup: validate input data
 
 ### Frontend Technical Write-up
 

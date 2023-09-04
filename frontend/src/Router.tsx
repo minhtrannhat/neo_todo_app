@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes } from "react-router-dom";
 
-const Router = () => {
+const Router = () => (
   <BrowserRouter>
     <Routes>{}</Routes>
-  </BrowserRouter>;
-};
+  </BrowserRouter>
+);
 
 export default Router;

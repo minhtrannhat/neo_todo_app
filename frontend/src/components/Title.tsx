@@ -8,7 +8,7 @@ interface IProps {
 const Title = ({ title }: IProps) => (
   <>
     <Helmet>
-      <title>Todo | {title}</title>
+      <title>Tozo | {title}</title>
     </Helmet>
     <Typography component="h1" variant="h5">
       {title}
