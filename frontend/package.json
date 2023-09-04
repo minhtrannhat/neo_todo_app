@@ -79,5 +79,5 @@
   "prettier": {
     "trailingComma": "all"
   },
-  "proxy": "http://localhost:5050"
+  "proxy": "http://127.0.0.1:5050"
 }
