@@ -24,6 +24,10 @@ import { AuthContextProvider } from "./AuthContext";
 // React router
 import Router from "./Router";
 
+// Toasts
+import Toasts from "./components/Toasts";
+import { ToastContextProvider } from "./ToastContext";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -35,9 +39,12 @@ const App = () => {
             <title>Todo</title>
           </Helmet>
           <ThemeProvider>
-            <Container maxWidth="md">
-              <Router />
-            </Container>
+            <ToastContextProvider>
+              <Container maxWidth="md">
+                <Toasts />
+                <Router />
+              </Container>
+            </ToastContextProvider>
           </ThemeProvider>
         </HelmetProvider>
       </AuthContextProvider>
