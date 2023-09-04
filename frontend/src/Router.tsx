@@ -1,8 +1,16 @@
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import ScrollToTop from "./components/ScrollToTop";
+import TopBar from "./components/TopBar";
+import Register from "./pages/Register";
 
 const Router = () => (
   <BrowserRouter>
-    <Routes>{}</Routes>
+    <ScrollToTop />
+    <TopBar />
+    <Routes>
+      <Route path="/register/" element={<Register />} />
+    </Routes>
   </BrowserRouter>
 );
 
