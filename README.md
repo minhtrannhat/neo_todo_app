@@ -2,9 +2,19 @@
 
 ## Frontend
 
-### Development dependencies
+### Development Workflow
 
-- `prettier`: Formatter
+- Format, lint and test with `npm run {format, lint, test}`.
+
+### Dependencies
+
+- React
+- React helment async: manage changes to document head
+- React router dom: route management
+- Material UI: UI styled components
+- Roboto font
+- Formik: form management
+- Yup: validate input data
 
 ### Frontend Technical Write-up
 
@@ -12,7 +22,7 @@ Inside the `frontend/` folder
 
 ## Backend
 
-### Development workflow
+### Development Workflow
 
 - Depends on the state of the database, run `pdm run recreate-db` to regenerate database.
 - Run `eval (pdm venv activate in-project)` (if you are using Fish shell) or `eval $(pdm venv activate in-project)` (if you are using bash/zsh) at the `backend` folder root to get into the backend python virtual environment.

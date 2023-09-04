@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Neo Todo App Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Dev Log
 
-## Available Scripts
+### Styling the frontend
 
-In the project directory, you can run:
+- Used the [MUI](mui.com) React component library using Material Design by Google.
+- Font used is `Roboto`. Font is imported to `src/App.tsx`.
 
-### `npm start`
+#### Use ThemeProvider
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To override the default MUI looks, we create a ThemeProvider at `src/ThemeProvider.tsx`.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### React Hook useMemo
 
-### `npm test`
+useMemo is a React Hook that lets you cache the result of a calculation between re-renders. Made for running expensive synchronous operations less often.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### MUI (Material UI)
 
-### `npm run build`
+##### Palette Mode
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Change default component colors to suit one's needs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+##### CSSBaseline
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Reset the CSS injected into `<head>`. A collection of HTML element and attribute style-normalizations, you can expect all of the elements to look the same across all browsers.
 
-### `npm run eject`
+##### useMediaQuery
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This React hook listens for matches to a CSS media query. It allows the rendering of components based on whether the query matches or not.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##### Container's maxWidth
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This will make sure Material UI's Container will not expand to fill the entire screen and instead just stop expanding at around 960px (which is `md`).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Configure the page's title (Browser Tab Text)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Use `react-helmet-async`, wrap it around the `App` in `App.tsx`.

@@ -1,26 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+// Roboto font and its weights
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+// Theming
+import ThemeProvider from "./ThemeProvider";
+
+// Material UI stuffs
+import Container from "@mui/material/Container";
+
+// React helmet async: configure the page's title
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
+// Authentication Context: Check if user is logged in or not
+import { AuthContextProvider } from "./AuthContext";
+
+// React router
+import Router from "./Router";
+
+// Toasts
+import Toasts from "./components/Toasts";
+import { ToastContextProvider } from "./ToastContext";
+
+const queryClient = new QueryClient();
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <HelmetProvider>
+          <Helmet>
+            <title>Todo</title>
+          </Helmet>
+          <ThemeProvider>
+            <ToastContextProvider>
+              <Container maxWidth="md">
+                <Toasts />
+                <Router />
+              </Container>
+            </ToastContextProvider>
+          </ThemeProvider>
+        </HelmetProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
