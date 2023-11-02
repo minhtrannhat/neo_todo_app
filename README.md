@@ -1,5 +1,9 @@
 # Todo API
 
+## To run
+
+`docker-compose up -d`
+
 ## Frontend
 
 ### Development Workflow

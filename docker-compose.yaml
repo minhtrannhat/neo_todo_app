@@ -1,0 +1,38 @@
+version: "3"
+services:
+  web-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - my_network
+    environment:
+      TODO_SECRET_KEY: "secret key"
+      TODO_QUART_DB_DATABASE_URL: postgres://postgres:postgres_password@postgres:5432/todo
+      TODO_QUART_DB_DATA_PATH: migrations/data.py
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: todo
+      POSTGRES_USER: postgres
+    networks:
+      - my_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 30s
+      timeout: 10s
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  my_network:
