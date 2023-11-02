@@ -23,6 +23,7 @@ from backend.blueprints.control import blueprint as control_blueprint
 from backend.blueprints.members import blueprint as members_blueprint
 from backend.blueprints.sessions import blueprint as sessions_blueprint
 from backend.blueprints.todos import blueprint as todos_blueprint
+from backend.blueprints.serving import blueprint as serving_blueprint
 
 # For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
@@ -48,6 +49,7 @@ app.register_blueprint(control_blueprint)
 app.register_blueprint(sessions_blueprint)
 app.register_blueprint(members_blueprint)
 app.register_blueprint(todos_blueprint)
+app.register_blueprint(serving_blueprint)
 
 
 # Rate limiting
