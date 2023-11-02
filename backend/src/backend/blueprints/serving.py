@@ -1,6 +1,5 @@
-from quart import Blueprint, render_template, ResponseReturnValue
+from quart import Blueprint, ResponseReturnValue, render_template
 from quart_rate_limiter import rate_exempt
-
 
 blueprint = Blueprint("serving", __name__)
 

@@ -21,9 +21,9 @@ from quart_schema import QuartSchema, RequestSchemaValidationError
 # Each blueprint is a logical collection of features in our web app
 from backend.blueprints.control import blueprint as control_blueprint
 from backend.blueprints.members import blueprint as members_blueprint
+from backend.blueprints.serving import blueprint as serving_blueprint
 from backend.blueprints.sessions import blueprint as sessions_blueprint
 from backend.blueprints.todos import blueprint as todos_blueprint
-from backend.blueprints.serving import blueprint as serving_blueprint
 
 # For making sure error responses are in JSON format
 from backend.lib.api_error import APIError
